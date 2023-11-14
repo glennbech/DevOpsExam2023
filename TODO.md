@@ -4,14 +4,14 @@ Candidate Nr: 2011
 
 ## Oppgave 1. Kjell's Python kode
 ### A. SAM & GitHub actions workflow 
-* [ ] Setup project in C9
-  * [ ] Setup GitHub timeout and connection
+* [x] Setup project in C9
+  * [x] Setup GitHub timeout and connection
   * git config --global credential.helper "cache --timeout=86400"
   * git config --global user.name "github brukernavn"
   * git config --global user.email "email for github bruker"
-  * [ ] Install MVN
-  * [ ] GitHub secrets (IAM)
-* [ ] Test Kjell's scripts
+  * [x] Install MVN
+  * [x] GitHub secrets (IAM)
+* [x] Test Kjell's scripts (successfully get images from kjellsimagebucket)
 * [ ] Fix Kjell script
   * [ ] Remove hardcoded bucket name, use environment
   * [ ] Test API with images
