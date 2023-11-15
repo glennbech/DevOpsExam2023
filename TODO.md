@@ -32,27 +32,35 @@ Candidate Nr: 2011
 
 ## Oppgave 3. Terraform, AWS Apprunner og Infrastruktur som kode
 ### A. Kodeendringer og forbedringer
-* [ ]
+* [ ] Remove hard coded values for service
+* [ ] Reduce CPU to 256 and memory to 1024
 
 ### B. Terraform i GitHub Actions
-* [ ]
+* [ ] Make GitHub action also run the terraform code
+* [ ] Have Terraform run after pushes to main that build Docker container images
+* [ ] Add terraform provider, use S3 bucket that we have used during practice
 
 ## Oppgave 4. Feedback
 
 ### A. Utvid applikasjonen og legg inn "Måleinstrumenter"
-* [ ]
+* [ ] Change the java app to allow Micrometer framework
+* [ ] Configure the micrometer to work with CloudWatch
+* [ ] Implement various meters
+* [ ] Write a short explanation for why I chose those meters
 
 ### B. CloudWatch Alarm og Terraform moduler
-* [ ]
+* [ ] Add a CloudWatch alam through Terraform that sends an email alert when triggered.
+* [ ] We chose the criteria for the alarm, but must explain why.
+* [ ] Make it its own Terraform module, make sure not too many variables must be set
 
 ## Oppgave 5. Drøfteoppgaver
 
 ### A. Kontinuerlig Integrering
-* [ ]
+* [ ] Explain what "Kontinuelig Integrering" is
 
 ### B. Sammenligning av Scrum/Smidig og DevOps fra et Utviklers Perspektiv
-* [ ]
+* [ ] Compare Scrum/Agile and DevOps from a Developers perspective
 
 ### C. Det Andre Prinsippet - Feedback
-* [ ]
+* [ ] Discuss how feedback help continual improvement and how to implement it
 
