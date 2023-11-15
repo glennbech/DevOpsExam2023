@@ -25,7 +25,7 @@ Candidate Nr: 2011
 
 ## Oppgave 2. Overgang til Java og Spring boot
 ### A. Dockerfile
-* [ ]
+* [x]
 
 ### B. GitHub Actions workflow for container image og ECR
 * [ ]
