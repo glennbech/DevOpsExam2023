@@ -17,11 +17,11 @@ Candidate Nr: 2011
   * [x] Test API with images
 * [x] GitHub Actions flow for SAM apps. 
   * [x] Every push to main should build and deploy the lambda function
-  * [ ] Push to other branches should just build
+  * [x] Push to other branches should just build
 * [ ] Explain what the sensor must do to make the workflow run using their own GitHub account.
 
 ### B. Docker container
-* [ ]
+* [ ] Make a dockerfile that builds and runs the code. 
 
 ## Oppgave 2. Overgang til Java og Spring boot
 ### A. Dockerfile

@@ -16,7 +16,7 @@ s3_client = boto3.client('s3', region_name='eu-west-1')
 rekognition_client = boto3.client('rekognition', region_name='eu-west-1')
 
 # Oppgave 1A
-BUCKET_NAME = os.environ.get("BucketName")
+BUCKET_NAME = os.environ.get("BUCKET_NAME")
 
 # if BUCKET_NAME is None:
 #     BUCKET_NAME = "simbucket2011"
