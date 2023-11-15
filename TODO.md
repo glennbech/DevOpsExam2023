@@ -12,11 +12,11 @@ Candidate Nr: 2011
   * [x] Install MVN
   * [x] GitHub secrets (IAM)
 * [x] Test Kjell's scripts (successfully get images from kjellsimagebucket)
-* [ ] Fix Kjell script
-  * [ ] Remove hardcoded bucket name, use environment
+* [x] Fix Kjell script
+  * [x] Remove hardcoded bucket name, use environment
   * [x] Test API with images
-* [ ] GitHub Actions flow for SAM apps. 
-  * [ ] Every push to main should build and deploy the lambda function
+* [x] GitHub Actions flow for SAM apps. 
+  * [x] Every push to main should build and deploy the lambda function
   * [ ] Push to other branches should just build
 * [ ] Explain what the sensor must do to make the workflow run using their own GitHub account.
 
