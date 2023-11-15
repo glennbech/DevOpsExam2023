@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   kjell
-
   Sample SAM Template for kjell
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
@@ -11,12 +10,18 @@ Globals:
     Timeout: 60
     MemorySize: 512
 
+Parameters:
+  BucketName:
+    Type: String
+    Default: "simbucket2011"
+    #kjellsimagebucket
+
 Resources:
 
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: "kjellsimgebucket"
+      BucketName: !Ref BucketName
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -27,6 +32,10 @@ Resources:
         - x86_64
       Policies:
         - AmazonRekognitionFullAccess
+        - AmazonS3ReadOnlyAccess
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref BucketName
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

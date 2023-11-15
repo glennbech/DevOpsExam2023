@@ -14,7 +14,7 @@ Candidate Nr: 2011
 * [x] Test Kjell's scripts (successfully get images from kjellsimagebucket)
 * [ ] Fix Kjell script
   * [ ] Remove hardcoded bucket name, use environment
-  * [ ] Test API with images
+  * [x] Test API with images
 * [ ] GitHub Actions flow for SAM apps. 
   * [ ] Every push to main should build and deploy the lambda function
   * [ ] Push to other branches should just build
