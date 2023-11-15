@@ -25,10 +25,10 @@ Candidate Nr: 2011
 
 ## Oppgave 2. Overgang til Java og Spring boot
 ### A. Dockerfile
-* [x]
+* [x] Add dockerfile for java
 
 ### B. GitHub Actions workflow for container image og ECR
-* [ ]
+* [x] Add workflow for java with ECR push, + hash and latest tag
 
 ## Oppgave 3. Terraform, AWS Apprunner og Infrastruktur som kode
 ### A. Kodeendringer og forbedringer
