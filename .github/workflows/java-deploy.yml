@@ -14,13 +14,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t simpRekognition .
+          docker build -t simprekognition .
 
       - name: Tag and push to ECR
         if: github.ref == 'refs/heads/master'
         run: |
           rev=$(git rev-parse --short HEAD)
-          docker tag simpRekognition 244530008913.dkr.ecr.eu-west-1.amazonaws.com/mama014-private:${rev}
+          docker tag simprekognition 244530008913.dkr.ecr.eu-west-1.amazonaws.com/mama014-private:${rev}
           aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 244530008913.dkr.ecr.eu-west-1.amazonaws.com
           docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/mama014-private:${rev}
 
