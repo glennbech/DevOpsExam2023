@@ -50,6 +50,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <fork>false</fork>
                     <mainClass>com.example.s3rekognition.S3RekognitionApplication</mainClass>
                 </configuration>
             </plugin>
