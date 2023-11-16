@@ -13,8 +13,7 @@ Globals:
 Parameters:
   BucketName:
     Type: String
-    Default: "simbucket2011"
-    #kjellsimagebucket
+    Default: "kjellsimagebucket"
 
 Resources:
 
