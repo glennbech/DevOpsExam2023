@@ -50,19 +50,14 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform init
-        run: terraform init
+        run: |
+          terraform init
 
       - name: Terraform Plan
         id: plan
         run: |
-          terraform plan 
-          -var "access_role=${ACCESS_ROLE}"
-          -var "image=${IMAGE}"
-          -var "policy_name=${POLICY_NAME}"
-          -var "port=${PORT}"
-          -var "role_name=${ROLE_NAME}"
-          -var "service_name=${SERVICE_NAME}"
-          -no-color
+            terraform plan -var "access_role=${ACCESS_ROLE}" -var "image=${IMAGE}" -var "policy_name=${POLICY_NAME}" -var "port=${PORT}" -var "role_name=${ROLE_NAME}" -var "service_name=${SERVICE_NAME}" -no-color
+
         continue-on-error: true
 
       - name: Terraform Plan Status
@@ -71,12 +66,5 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          terraform apply 
-          -var "access_role=${ACCESS_ROLE}"
-          -var "image=${IMAGE}"
-          -var "policy_name=${POLICY_NAME}"
-          -var "port=${PORT}"
-          -var "role_name=${ROLE_NAME}"
-          -var "service_name=${SERVICE_NAME}"
-          -auto-approve
+          terraform apply -var "access_role=${ACCESS_ROLE}" -var "image=${IMAGE}" -var "policy_name=${POLICY_NAME}" -var "port=${PORT}" -var "role_name=${ROLE_NAME}" -var "service_name=${SERVICE_NAME}" -auto-approve
 
