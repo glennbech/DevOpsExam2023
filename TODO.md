@@ -44,6 +44,7 @@ Candidate Nr: 2011
 ## Oppgave 4. Feedback
 
 ### A. Utvid applikasjonen og legg inn "Måleinstrumenter"
+* [x] Add more endpoints
 * [ ] Change the java app to allow Micrometer framework
 * [ ] Configure the micrometer to work with CloudWatch
 * [ ] Implement various meters

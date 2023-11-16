@@ -69,7 +69,103 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             DetectProtectiveEquipmentResult result = rekognitionClient.detectProtectiveEquipment(request);
 
             // If any person on an image lacks PPE on the face, it's a violation of regulations
-            boolean violation = isViolation(result);
+            boolean violation = isViolation(result, "FACE");
+
+            logger.info("scanning " + image.getKey() + ", violation result " + violation);
+            // Categorize the current image as a violation or not.
+            int personCount = result.getPersons().size();
+            PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
+            classificationResponses.add(classification);
+        }
+        PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
+        return ResponseEntity.ok(ppeResponse);
+    }
+
+    /**
+     * This endpoint is an experimental one where VerneVokterne
+     * wanted to test their software against construction workers to check if they wore helmet
+     *
+     * @param bucketName
+     * @return
+     */
+    @GetMapping(value = "/scan-construction", consumes = "*/*", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<PPEResponse> scanForHeadCover(@RequestParam String bucketName) {
+        // List all objects in the S3 bucket
+        ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
+
+        // This will hold all of our classifications
+        List<PPEClassificationResponse> classificationResponses = new ArrayList<>();
+
+        // This is all the images in the bucket
+        List<S3ObjectSummary> images = imageList.getObjectSummaries();
+
+        for (S3ObjectSummary image : images) {
+            logger.info("scanning" + image.getKey());
+
+            DetectProtectiveEquipmentRequest request = new DetectProtectiveEquipmentRequest()
+                    .withImage(new Image()
+                            .withS3Object(new S3Object()
+                                    .withBucket(bucketName)
+                                    .withName(image.getKey())))
+                    .withSummarizationAttributes(new ProtectiveEquipmentSummarizationAttributes()
+                            .withMinConfidence(80f)
+                            .withRequiredEquipmentTypes("HEAD_COVER"));
+
+            DetectProtectiveEquipmentResult result = rekognitionClient.detectProtectiveEquipment(request);
+
+            // If any person on an image lacks PPE on the face, it's a violation of regulations
+            boolean violation = isViolation(result, "HEAD");
+
+            logger.info("scanning " + image.getKey() + ", violation result " + violation);
+            // Categorize the current image as a violation or not.
+            int personCount = result.getPersons().size();
+            PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
+            classificationResponses.add(classification);
+        }
+        PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
+        return ResponseEntity.ok(ppeResponse);
+    }
+
+
+    /**
+     * This endpoint checks works in a laboratory for face, and hand covers
+     *
+     * @param bucketName
+     * @return
+     */
+    @GetMapping(value = "/scan-full-ppe", consumes = "*/*", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<PPEResponse> scanForFullPPE(@RequestParam String bucketName) {
+        // List all objects in the S3 bucket
+        ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
+
+        // This will hold all of our classifications
+        List<PPEClassificationResponse> classificationResponses = new ArrayList<>();
+
+        // This is all the images in the bucket
+        List<S3ObjectSummary> images = imageList.getObjectSummaries();
+
+        for (S3ObjectSummary image : images) {
+            logger.info("scanning" + image.getKey());
+
+            DetectProtectiveEquipmentRequest request = new DetectProtectiveEquipmentRequest()
+                    .withImage(new Image()
+                            .withS3Object(new S3Object()
+                                    .withBucket(bucketName)
+                                    .withName(image.getKey())))
+                    .withSummarizationAttributes(new ProtectiveEquipmentSummarizationAttributes()
+                            .withMinConfidence(80f)
+                            .withRequiredEquipmentTypes("FACE_COVER")
+                            .withRequiredEquipmentTypes("HAND_COVER"));
+
+            DetectProtectiveEquipmentResult result = rekognitionClient.detectProtectiveEquipment(request);
+
+            // If any person on an image lacks PPE on the face, it's a violation of regulations
+            boolean violation = isViolation(result, "FACE");
+            if (!violation) {
+                violation = isViolation(result, "HAND");
+            }
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
@@ -87,13 +183,15 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
      * each body part of the person. If the body part is a FACE and there is no
      * protective gear on it, a violation is recorded for the picture.
      *
+     * Update: Has been altered to take in a body part to check different parts
+     *
      * @param result
      * @return
      */
-    private static boolean isViolation(DetectProtectiveEquipmentResult result) {
+    private static boolean isViolation(DetectProtectiveEquipmentResult result, String partOfBody) {
         return result.getPersons().stream()
                 .flatMap(p -> p.getBodyParts().stream())
-                .anyMatch(bodyPart -> bodyPart.getName().equals("FACE")
+                .anyMatch(bodyPart -> bodyPart.getName().equals(partOfBody)
                         && bodyPart.getEquipmentDetections().isEmpty());
     }
 
