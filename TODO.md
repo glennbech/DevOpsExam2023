@@ -36,8 +36,8 @@ Candidate Nr: 2011
 * [x] Reduce CPU to 256 and memory to 1024
 
 ### B. Terraform i GitHub Actions
-* [ ] Make GitHub action also run the terraform code
-* [ ] Have Terraform run after pushes to main that build Docker container images
+* [x] Make GitHub action also run the terraform code
+* [x] Have Terraform run after pushes to main that build Docker container images
 * [ ] Add terraform provider, use S3 bucket that we have used during practice
 
 ## Oppgave 4. Feedback
