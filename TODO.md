@@ -38,7 +38,8 @@ Candidate Nr: 2011
 ### B. Terraform i GitHub Actions
 * [x] Make GitHub action also run the terraform code
 * [x] Have Terraform run after pushes to main that build Docker container images
-* [ ] Add terraform provider, use S3 bucket that we have used during practice
+* [x] Add terraform provider, use S3 bucket that we have used during practice
+* [ ] Explain what the sensor must do to make the workflow run using their own GitHub account.
 
 ## Oppgave 4. Feedback
 
