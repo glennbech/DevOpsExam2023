@@ -32,8 +32,8 @@ Candidate Nr: 2011
 
 ## Oppgave 3. Terraform, AWS Apprunner og Infrastruktur som kode
 ### A. Kodeendringer og forbedringer
-* [ ] Remove hard coded values for service
-* [ ] Reduce CPU to 256 and memory to 1024
+* [x] Remove hard coded values for service
+* [x] Reduce CPU to 256 and memory to 1024
 
 ### B. Terraform i GitHub Actions
 * [ ] Make GitHub action also run the terraform code
