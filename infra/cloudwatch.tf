@@ -11,21 +11,21 @@ resource "aws_cloudwatch_dashboard" "main" {
         "height": 6,
         "properties": {
           "metrics": [
-            {
+            [
               "${var.dashboard_name}",
               "violations.value",
               {"type": "noMask"}
-            },
-            {
+            ],
+            [
               "${var.dashboard_name}",
               "violations.value",
               {"type": "noHelmet"}
-            },
-            {
+            ],
+            [
               "${var.dashboard_name}",
-              "violations",
+              "violations.value",
               {"type": "noMaskOrGlove"}
-            }
+            ]
           ],
           "period": 300,
           "stat": "Maximum",
