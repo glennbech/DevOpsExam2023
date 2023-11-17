@@ -29,7 +29,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             ]
           ],
           "period": 300,
-          "stat": "Maximum",
+          "stat": "Sum",
           "region": "eu-west-1",
           "title": "Total number of violations"
         }
