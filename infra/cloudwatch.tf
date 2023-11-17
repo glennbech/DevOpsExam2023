@@ -13,19 +13,19 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "violations_total.value"
+              "violations_total.count"
             ],
             [
               "${var.dashboard_name}",
-              "violations_noMask.value"
+              "violations_noMask.count"
             ],
             [
               "${var.dashboard_name}",
-              "violations_noHelmet.value"
+              "violations_noHelmet.count"
             ],
             [
               "${var.dashboard_name}",
-              "violations_noMaskOrGlove.value"
+              "violations_noMaskOrGlove.count"
             ]
           ],
           "period": 300,
