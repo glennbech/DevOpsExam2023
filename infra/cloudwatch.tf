@@ -13,7 +13,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "account_count.value"
+              "violations.value"
             ]
           ],
           "period": 300,
