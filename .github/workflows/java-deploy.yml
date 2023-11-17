@@ -40,6 +40,7 @@ jobs:
       PORT: 8080
       ROLE_NAME: Kandidat2011Sim
       SERVICE_NAME: Kandidat2011Service
+      DASHBOARD_NAME: kandidat2011simp
     defaults:
       run:
         working-directory: ./infra
@@ -56,7 +57,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: |
-            terraform plan -var "access_role=${ACCESS_ROLE}" -var "image=${IMAGE}" -var "policy_name=${POLICY_NAME}" -var "port=${PORT}" -var "role_name=${ROLE_NAME}" -var "service_name=${SERVICE_NAME}" -no-color
+            terraform plan -var "access_role=${ACCESS_ROLE}" -var "image=${IMAGE}" -var "policy_name=${POLICY_NAME}" -var "port=${PORT}" -var "role_name=${ROLE_NAME}" -var "service_name=${SERVICE_NAME}" -var "dashboard_name=${DASHBOARD_NAME}" -no-color
 
         continue-on-error: true
 
@@ -66,5 +67,5 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          terraform apply -var "access_role=${ACCESS_ROLE}" -var "image=${IMAGE}" -var "policy_name=${POLICY_NAME}" -var "port=${PORT}" -var "role_name=${ROLE_NAME}" -var "service_name=${SERVICE_NAME}" -auto-approve
+          terraform apply -var "access_role=${ACCESS_ROLE}" -var "image=${IMAGE}" -var "policy_name=${POLICY_NAME}" -var "port=${PORT}" -var "role_name=${ROLE_NAME}" -var "service_name=${SERVICE_NAME}" -var "dashboard_name=${DASHBOARD_NAME}" -auto-approve
 

@@ -35,3 +35,8 @@ variable "service_name" {
 }
 # Default: Kandidat2011Service
 
+variable "dashboard_name" {
+  description = "The name of the used CloudWatch Dashobard"
+  type = string
+}
+# Default: kandidat2011simp

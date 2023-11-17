@@ -9,6 +9,10 @@ import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.example.s3rekognition.PPEClassificationResponse;
 import com.example.s3rekognition.PPEResponse;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +29,15 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     private final AmazonS3 s3Client;
     private final AmazonRekognition rekognitionClient;
 
+    private final MeterRegistry meterRegistry;
+
     private static final Logger logger = Logger.getLogger(RekognitionController.class.getName());
 
-    public RekognitionController() {
+    @Autowired
+    public RekognitionController(MeterRegistry meterRegistry) {
         this.s3Client = AmazonS3ClientBuilder.standard().build();
         this.rekognitionClient = AmazonRekognitionClientBuilder.standard().build();
+        this.meterRegistry = meterRegistry;
     }
 
     /**
@@ -42,7 +50,10 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
      */
     @GetMapping(value = "/scan-ppe", consumes = "*/*", produces = "application/json")
     @ResponseBody
+    @Timed(extraTags = {"endpoint", "/scan-ppe"})
     public ResponseEntity<PPEResponse> scanForPPE(@RequestParam String bucketName) {
+        int violations = 0;
+
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
 
@@ -70,6 +81,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             // If any person on an image lacks PPE on the face, it's a violation of regulations
             boolean violation = isViolation(result, "FACE");
+            if (violation) violations++;
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
@@ -77,6 +89,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
+        meterRegistry.counter("violations", "type", "noMask").increment(violations);
+
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
     }
@@ -90,7 +104,10 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
      */
     @GetMapping(value = "/scan-construction", consumes = "*/*", produces = "application/json")
     @ResponseBody
+    @Timed(extraTags = {"endpoint", "/scan-construction"})
     public ResponseEntity<PPEResponse> scanForHeadCover(@RequestParam String bucketName) {
+        int violations = 0;
+
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
 
@@ -116,6 +133,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             // If any person on an image lacks PPE on the face, it's a violation of regulations
             boolean violation = isViolation(result, "HEAD");
+            if (violation) violations++;
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
@@ -123,10 +141,11 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
+        meterRegistry.counter("violations", "type", "noHelmet").increment(violations);
+
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
     }
-
 
     /**
      * This endpoint checks works in a laboratory for face, and hand covers
@@ -136,7 +155,10 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
      */
     @GetMapping(value = "/scan-full-ppe", consumes = "*/*", produces = "application/json")
     @ResponseBody
+    @Timed(extraTags = {"endpoint", "/scan-full-ppe"})
     public ResponseEntity<PPEResponse> scanForFullPPE(@RequestParam String bucketName) {
+        int violations = 0;
+
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
 
@@ -166,6 +188,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             if (!violation) {
                 violation = isViolation(result, "HAND");
             }
+            if (violation) violations++;
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
@@ -173,6 +196,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
+        meterRegistry.counter("violations", "type", "noMaskOrGlove").increment(violations);
+
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
     }
@@ -200,4 +225,5 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
     }
+
 }
