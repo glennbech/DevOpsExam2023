@@ -88,7 +88,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        meterRegistry.counter("violations", "type", "noMask").increment(violations);
+        meterRegistry.counter("violations_noMask").increment(violations);
+        meterRegistry.counter("violations_total").increment(violations);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -140,7 +141,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        meterRegistry.counter("violations", "type", "noHelmet").increment(violations);
+        meterRegistry.counter("violations_noHelmet").increment(violations);
+        meterRegistry.counter("violations_total").increment(violations);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -195,7 +197,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        meterRegistry.counter("violations", "type", "noMaskOrGlove").increment(violations);
+        meterRegistry.counter("violations_noMaskOrGlove").increment(violations);
+        meterRegistry.counter("violations_total").increment(violations);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
