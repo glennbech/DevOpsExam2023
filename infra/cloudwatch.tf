@@ -13,17 +13,17 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "violations.value",
+              "violations",
               {"type": "noMask"}
             ],
             [
               "${var.dashboard_name}",
-              "violations.value",
+              "violations",
               {"type": "noHelmet"}
             ],
             [
               "${var.dashboard_name}",
-              "violations.value",
+              "violations",
               {"type": "noMaskOrGlove"}
             ]
           ],
