@@ -44,15 +44,33 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "latency_noMask.sum"
+              "latency_noMask.sum",
+              "exception",
+              "none",
+              "method",
+              "scanForPPE",
+              "class",
+              "com.example.s3rekognition.controller.RekognitionController"
             ],
             [
               "${var.dashboard_name}",
-              "latency_noHelmet.sum"
+              "latency_noHelmet.sum",
+              "exception",
+              "none",
+              "method",
+              "scanForHeadCover",
+              "class",
+              "com.example.s3rekognition.controller.RekognitionController"
             ],
             [
               "${var.dashboard_name}",
-              "latency_noMaskOrGlove.sum"
+              "latency_noMaskOrGlove.sum",
+              "exception",
+              "none",
+              "method",
+              "scanForFullPPE",
+              "class",
+              "com.example.s3rekognition.controller.RekognitionController"
             ]
           ],
           "period": 300,
