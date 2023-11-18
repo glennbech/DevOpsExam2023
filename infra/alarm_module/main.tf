@@ -13,6 +13,7 @@ resource "aws_cloudwatch_metric_alarm" "threshold" {
   evaluation_periods = "2"
   period = "60"
   statistic = "Average"
+  extended_statistic = "p90"
 
   alarm_description = "This alarm goes of, when a call at the 99th percentile exceeds the threshold"
   alarm_actions = [aws_sns_topic.user_updates.arn]
