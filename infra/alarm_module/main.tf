@@ -1,7 +1,7 @@
 resource "aws_cloudwatch_metric_alarm" "threshold" {
   alarm_name     = "${var.prefix}-threshold"
   namespace = var.prefix
-  metric_name = ""
+  metric_name = "latency_noMask.sum"
 
   comparison_operator = "GreaterThanThreshold"
   threshold = var.threshold
