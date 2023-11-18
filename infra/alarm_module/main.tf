@@ -3,7 +3,7 @@ resource "aws_cloudwatch_metric_alarm" "threshold" {
   namespace = var.prefix
   metric_name = ""
 
-  comparison_operator = "GreaterThanTreshold"
+  comparison_operator = "GreaterThanThreshold"
   threshold = var.threshold
   evaluation_periods = "2"
   period = "60"
