@@ -43,6 +43,5 @@ variable "dashboard_name" {
 
 variable "alarm_email" {
   type = string
-  default = "marcus1sp2@gmail.com"
 }
-# Default: marcus1sp2@gmail.com
+

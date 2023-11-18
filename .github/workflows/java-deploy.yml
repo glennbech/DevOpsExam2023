@@ -41,7 +41,7 @@ jobs:
       ROLE_NAME: Kandidat2011Sim
       SERVICE_NAME: Kandidat2011Service
       DASHBOARD_NAME: kandidat2011simp
-      ALARM_EMAIL: alarm_email
+      ALARM_EMAIL: marcus1sp2@gmail.com
     defaults:
       run:
         working-directory: ./infra
