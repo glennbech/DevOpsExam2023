@@ -2,6 +2,11 @@ resource "aws_cloudwatch_metric_alarm" "threshold" {
   alarm_name     = "${var.prefix}-threshold"
   namespace = var.prefix
   metric_name = "latency_noMask.sum"
+  dimensions = {
+    class = "com.example.s3rekognition.controller.RekognitionController"
+    exception = "none"
+    method = "scanForPPE"
+  }
 
   comparison_operator = "GreaterThanThreshold"
   threshold = var.threshold
