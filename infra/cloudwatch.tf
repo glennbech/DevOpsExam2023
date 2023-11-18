@@ -74,7 +74,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             ]
           ],
           "period": 300,
-          "stat": "p99",
+          "stat": "average",
           "region": "eu-west-1",
           "title": "Method Latency"
         }
