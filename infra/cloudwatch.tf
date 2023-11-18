@@ -44,7 +44,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "latency_noMask.sum",
+              "latency_noMask.max",
               "exception",
               "none",
               "method",
@@ -54,7 +54,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             ],
             [
               "${var.dashboard_name}",
-              "latency_noHelmet.sum",
+              "latency_noHelmet.max",
               "exception",
               "none",
               "method",
@@ -64,7 +64,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             ],
             [
               "${var.dashboard_name}",
-              "latency_noMaskOrGlove.sum",
+              "latency_noMaskOrGlove.max",
               "exception",
               "none",
               "method",
@@ -88,4 +88,5 @@ module "alarm" {
   source = "./alarm_module"
   alarm_email = var.alarm_email
   prefix = var.dashboard_name
+  threshold = var.threshold
 }
