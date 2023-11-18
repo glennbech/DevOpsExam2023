@@ -44,19 +44,19 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "latency_noMask.value"
+              "latency_noMask"
             ],
             [
               "${var.dashboard_name}",
-              "latency_noHelmet.value"
+              "latency_noHelmet"
             ],
             [
               "${var.dashboard_name}",
-              "latency_noMaskOrGlove.value"
+              "latency_noMaskOrGlove"
             ]
           ],
           "period": 300,
-          "stat": "Average",
+          "stat": "p90",
           "region": "eu-west-1",
           "title": "Method Latency"
         }
