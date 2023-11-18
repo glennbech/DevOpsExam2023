@@ -26,8 +26,8 @@ Candidate Nr: 2011
 ## Oppgave 4. Feedback
 ### A. Utvid applikasjonen og legg inn "Måleinstrumenter"
 
-* [ ] 1: Meter: Measure the amount of violations over time to trace a pattern of improvement or decline. 
-* [ ] 2: Timer: Measure the performance of the end points
+* [x] 1: Meter: Measure the amount of violations over time to trace a pattern of improvement or decline. 
+* [x] 2: Timer: Measure the performance of the end points
 * [ ] 3: Meter: Count failed requests and errors
 * [ ] 4:
 * [ ] 5: 

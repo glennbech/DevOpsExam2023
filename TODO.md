@@ -45,8 +45,8 @@ Candidate Nr: 2011
 
 ### A. Utvid applikasjonen og legg inn "Måleinstrumenter"
 * [x] Add more endpoints
-* [ ] Change the java app to allow Micrometer framework
-* [ ] Configure the micrometer to work with CloudWatch
+* [x] Change the java app to allow Micrometer framework
+* [x] Configure the micrometer to work with CloudWatch
 * [ ] Implement various meters
 * [ ] Write a short explanation for why I chose those meters
 

@@ -40,3 +40,8 @@ variable "dashboard_name" {
   type = string
 }
 # Default: kandidat2011simp
+
+variable "alarm_email" {
+  type = string
+}
+# Default: marcus1sp2@gmail.com
