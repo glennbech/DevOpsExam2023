@@ -209,11 +209,11 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
      * It does so by iterating over all persons in a picture, and then again over
      * each body part of the person. If the body part is a FACE and there is no
      * protective gear on it, a violation is recorded for the picture.
-     *
+     * <p>
      * Update: Has been altered to take in a body part to check different parts
      *
-     * @param result
-     * @return
+     * @param result takes in the result of the rekognition check
+     * @return a bool, determining which part there is a violation of
      */
     private static boolean isViolation(DetectProtectiveEquipmentResult result, String partOfBody) {
         return result.getPersons().stream()
