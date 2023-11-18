@@ -33,6 +33,33 @@ resource "aws_cloudwatch_dashboard" "main" {
           "region": "eu-west-1",
           "title": "Total number of violations"
         }
+      },
+      {
+        "type": "metric",
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [
+              "${var.dashboard_name}",
+              "latency_noMask.value"
+            ],
+            [
+              "${var.dashboard_name}",
+              "latency_noHelmet.value"
+            ],
+            [
+              "${var.dashboard_name}",
+              "latency_noMaskOrGlove.value"
+            ]
+          ],
+          "period": 300,
+          "stat": "p90",
+          "region": "eu-west-1",
+          "title": "Method Latency"
+        }
       }
     ]
   }

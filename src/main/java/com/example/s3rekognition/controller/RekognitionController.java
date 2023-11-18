@@ -44,12 +44,12 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
      * Files in the bucket for Protective Gear Violations.
      * <p>
      *
-     * @param bucketName
-     * @return
+     * @param bucketName the name of the bucket that contains the images to be used
+     * @return a json with information about which images had violations and not
      */
     @GetMapping(value = "/scan-ppe", consumes = "*/*", produces = "application/json")
     @ResponseBody
-    @Timed(extraTags = {"endpoint", "/scan-ppe"})
+    @Timed(value = "latency_noMask")
     public ResponseEntity<PPEResponse> scanForPPE(@RequestParam String bucketName) {
         int violations = 0;
 
@@ -99,12 +99,12 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
      * This endpoint is an experimental one where VerneVokterne
      * wanted to test their software against construction workers to check if they wore helmet
      *
-     * @param bucketName
-     * @return
+     * @param bucketName the name of the bucket that contains the images to be used
+     * @return a json with information about which images had violations and not
      */
     @GetMapping(value = "/scan-construction", consumes = "*/*", produces = "application/json")
     @ResponseBody
-    @Timed(extraTags = {"endpoint", "/scan-construction"})
+    @Timed(value = "latency_noHelmet")
     public ResponseEntity<PPEResponse> scanForHeadCover(@RequestParam String bucketName) {
         int violations = 0;
 
@@ -151,12 +151,12 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     /**
      * This endpoint checks works in a laboratory for face, and hand covers
      *
-     * @param bucketName
-     * @return
+     * @param bucketName the name of the bucket that contains the images to be used
+     * @return a json with information about which images had violations and not
      */
     @GetMapping(value = "/scan-full-ppe", consumes = "*/*", produces = "application/json")
     @ResponseBody
-    @Timed(extraTags = {"endpoint", "/scan-full-ppe"})
+    @Timed(value = "latency_noMaskOrGlove")
     public ResponseEntity<PPEResponse> scanForFullPPE(@RequestParam String bucketName) {
         int violations = 0;
 
