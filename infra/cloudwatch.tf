@@ -44,15 +44,15 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "latency_noMask.max"
+              "latency_noMask.sum"
             ],
             [
               "${var.dashboard_name}",
-              "latency_noHelmet.max"
+              "latency_noHelmet.sum"
             ],
             [
               "${var.dashboard_name}",
-              "latency_noMaskOrGlove.max"
+              "latency_noMaskOrGlove.sum"
             ]
           ],
           "period": 300,
