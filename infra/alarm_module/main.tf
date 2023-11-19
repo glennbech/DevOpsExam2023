@@ -9,7 +9,7 @@ resource "aws_cloudwatch_metric_alarm" "NoMaskLatencyHigh" {
   }
 
   comparison_operator = "GreaterThanThreshold"
-  threshold = var.threshold
+  threshold = var.latencyThreshold
   evaluation_periods = "2"
   period = "60"
   extended_statistic = "p90"
@@ -29,7 +29,7 @@ resource "aws_cloudwatch_metric_alarm" "NoHelmetLatencyHigh" {
   }
 
   comparison_operator = "GreaterThanThreshold"
-  threshold = var.threshold
+  threshold = var.latencyThreshold
   evaluation_periods = "2"
   period = "60"
   extended_statistic = "p90"
@@ -49,12 +49,28 @@ resource "aws_cloudwatch_metric_alarm" "NoMaskOrGloveLatencyHigh" {
   }
 
   comparison_operator = "GreaterThanThreshold"
-  threshold = var.threshold
+  threshold = var.latencyThreshold
   evaluation_periods = "2"
   period = "60"
   extended_statistic = "p90"
 
   alarm_description = "This alarm goes of, when a call at /scan-full-ppe at the 90th percentile exceeds the threshold"
+  alarm_actions = [aws_sns_topic.user_updates.arn]
+}
+
+resource "aws_cloudwatch_metric_alarm" "ToManyPPEViolations" {
+  alarm_name     = "${var.prefix}-ViolationsThreshold"
+  namespace = var.prefix
+  metric_name = "violations_total.count"
+
+
+  comparison_operator = "GreaterThanThreshold"
+  threshold = var.violationsThreshold
+  evaluation_periods = "2"
+  period = "60"
+  statistic = "Sum"
+
+  alarm_description = "This alarm goes off when too many violate standard PPE"
   alarm_actions = [aws_sns_topic.user_updates.arn]
 }
 

@@ -57,7 +57,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           "period": 300,
           "stat": "Average",
           "region": "eu-west-1",
-          "title": "Percentage of Violations"
+          "title": "Average Percentage of Violations"
         }
       },
       {
@@ -140,5 +140,6 @@ module "alarm" {
   source = "./alarm_module"
   alarm_email = var.alarm_email
   prefix = var.dashboard_name
-  threshold = var.threshold
+  latencyThreshold = var.latencyThreshold
+  violationsThreshold = var.violationThreshold
 }

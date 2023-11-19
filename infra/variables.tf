@@ -45,7 +45,12 @@ variable "alarm_email" {
   type = string
 }
 
-variable "threshold" {
+variable "latencyThreshold" {
   type = string
   default = "7000"
+}
+
+variable "violationThreshold" {
+  type = string
+  default = "25"
 }

@@ -2,9 +2,14 @@ variable "prefix" {
   type = string
 }
 
-variable "threshold" {
+variable "latencyThreshold" {
   type = string
   default = "5000"
+}
+
+variable "violationsThreshold" {
+  type = string
+  default = "20"
 }
 
 variable "alarm_email" {
