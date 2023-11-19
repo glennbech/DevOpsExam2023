@@ -111,7 +111,7 @@ resource "aws_cloudwatch_dashboard" "main" {
               "people_count.count"
             ]
           ],
-          "view": "gauge"
+          "view": "gauge",
           "yAxis":{
              "left":{
                 "min":0,
