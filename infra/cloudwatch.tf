@@ -99,7 +99,7 @@ resource "aws_cloudwatch_dashboard" "main" {
         }
       },
       {
-        "type": "singleValue",
+        "type": "metric",
         "x": 12,
         "y": 0,
         "width": 12,
@@ -111,6 +111,13 @@ resource "aws_cloudwatch_dashboard" "main" {
               "people_count.count"
             ]
           ],
+          "view": "gauge"
+          "yAxis":{
+             "left":{
+                "min":0,
+                "max":100
+             }
+          },
           "period": 300,
           "stat": "Maximum",
           "region": "eu-west-1",
