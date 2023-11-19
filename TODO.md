@@ -51,9 +51,9 @@ Candidate Nr: 2011
 * [ ] Write a short explanation for why I chose those meters
 
 ### B. CloudWatch Alarm og Terraform moduler
-* [ ] Add a CloudWatch alam through Terraform that sends an email alert when triggered.
+* [x] Add a CloudWatch alarm through Terraform that sends an email alert when triggered.
 * [ ] We chose the criteria for the alarm, but must explain why.
-* [ ] Make it its own Terraform module, make sure not too many variables must be set
+* [x] Make it its own Terraform module, make sure not too many variables must be set
 
 ## Oppgave 5. Drøfteoppgaver
 

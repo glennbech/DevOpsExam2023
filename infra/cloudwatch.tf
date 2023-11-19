@@ -44,6 +44,25 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
+              "violations_percentage.avg"
+            ]
+          ],
+          "period": 300,
+          "stat": "Average",
+          "region": "eu-west-1",
+          "title": "Percentage of Violations"
+        }
+      },
+      {
+        "type": "metric",
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [
+              "${var.dashboard_name}",
               "latency_noMask.avg",
               "exception",
               "none",

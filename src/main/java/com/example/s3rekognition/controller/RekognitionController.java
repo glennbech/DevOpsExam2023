@@ -52,6 +52,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     @Timed(value = "latency_noMask")
     public ResponseEntity<PPEResponse> scanForPPE(@RequestParam String bucketName) {
         int violations = 0;
+        int nonViolations = 0;
 
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
@@ -80,7 +81,11 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             // If any person on an image lacks PPE on the face, it's a violation of regulations
             boolean violation = isViolation(result, "FACE");
-            if (violation) violations++;
+            if (violation) {
+                violations++;
+            } else {
+                nonViolations++;
+            }
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
@@ -90,6 +95,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         }
         meterRegistry.counter("violations_noMask").increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
+        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.counter("violations_percentage").increment(violationsPercentage);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -107,6 +114,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     @Timed(value = "latency_noHelmet")
     public ResponseEntity<PPEResponse> scanForHeadCover(@RequestParam String bucketName) {
         int violations = 0;
+        int nonViolations = 0;
 
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
@@ -133,7 +141,11 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             // If any person on an image lacks PPE on the face, it's a violation of regulations
             boolean violation = isViolation(result, "HEAD");
-            if (violation) violations++;
+            if (violation) {
+                violations++;
+            } else {
+                nonViolations++;
+            }
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
@@ -143,6 +155,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         }
         meterRegistry.counter("violations_noHelmet").increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
+        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.counter("violations_percentage").increment(violationsPercentage);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -159,6 +173,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     @Timed(value = "latency_noMaskOrGlove")
     public ResponseEntity<PPEResponse> scanForFullPPE(@RequestParam String bucketName) {
         int violations = 0;
+        int nonViolations = 0;
 
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
@@ -189,7 +204,11 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             if (!violation) {
                 violation = isViolation(result, "HAND");
             }
-            if (violation) violations++;
+            if (violation) {
+                violations++;
+            } else {
+                nonViolations++;
+            }
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
@@ -199,6 +218,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         }
         meterRegistry.counter("violations_noMaskOrGlove").increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
+        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.counter("violations_percentage").increment(violationsPercentage);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
