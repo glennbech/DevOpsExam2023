@@ -44,7 +44,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "latency_noMask.max",
+              "latency_noMask.avg",
               "exception",
               "none",
               "method",
@@ -54,7 +54,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             ],
             [
               "${var.dashboard_name}",
-              "latency_noHelmet.max",
+              "latency_noHelmet.avg",
               "exception",
               "none",
               "method",
@@ -64,7 +64,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             ],
             [
               "${var.dashboard_name}",
-              "latency_noMaskOrGlove.max",
+              "latency_noMaskOrGlove.avg",
               "exception",
               "none",
               "method",
