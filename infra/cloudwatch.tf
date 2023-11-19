@@ -44,11 +44,11 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "violations_percentage.count"
+              "violations_percentage"
             ]
           ],
           "period": 300,
-          "stat": "Maximum",
+          "stat": "Average",
           "region": "eu-west-1",
           "title": "Percentage of Violations"
         }
