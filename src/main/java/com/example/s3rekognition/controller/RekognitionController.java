@@ -233,7 +233,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         meterRegistry.counter("violations_total").increment(violations);
         double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
         meterRegistry.counter("violations_percentage").increment(violationsPercentage);
-        meterRegistry.gauge("People in Building", people);
+        meterRegistry.gauge("people_count", people);
     }
 
 
