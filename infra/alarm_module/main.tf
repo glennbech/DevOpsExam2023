@@ -1,4 +1,4 @@
-resource "aws_cloudwatch_metric_alarm" "threshold" {
+resource "aws_cloudwatch_metric_alarm" "NoMaskLatencyHigh" {
   alarm_name     = "${var.prefix}-NoMaskLatency"
   namespace = var.prefix
   metric_name = "latency_noMask.avg"
@@ -18,7 +18,7 @@ resource "aws_cloudwatch_metric_alarm" "threshold" {
   alarm_actions = [aws_sns_topic.user_updates.arn]
 }
 
-resource "aws_cloudwatch_metric_alarm" "threshold" {
+resource "aws_cloudwatch_metric_alarm" "NoHelmetLatencyHigh" {
   alarm_name     = "${var.prefix}-NoHelmetLatency"
   namespace = var.prefix
   metric_name = "latency_noHelmet.avg"
@@ -38,7 +38,7 @@ resource "aws_cloudwatch_metric_alarm" "threshold" {
   alarm_actions = [aws_sns_topic.user_updates.arn]
 }
 
-resource "aws_cloudwatch_metric_alarm" "threshold" {
+resource "aws_cloudwatch_metric_alarm" "NoMaskOrGloveLatencyHigh" {
   alarm_name     = "${var.prefix}-NoMaskOrGloveLatency"
   namespace = var.prefix
   metric_name = "latency_noMaskOrGlove.avg"
