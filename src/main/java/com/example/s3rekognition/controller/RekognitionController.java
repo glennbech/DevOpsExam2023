@@ -53,6 +53,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     public ResponseEntity<PPEResponse> scanForPPE(@RequestParam String bucketName) {
         int violations = 0;
         int nonViolations = 0;
+        int people = 0;
 
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
@@ -81,22 +82,16 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             // If any person on an image lacks PPE on the face, it's a violation of regulations
             boolean violation = isViolation(result, "FACE");
-            if (violation) {
-                violations++;
-            } else {
-                nonViolations++;
-            }
+            if (violation) violations++; else nonViolations++;
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
             int personCount = result.getPersons().size();
+            people += personCount;
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        meterRegistry.counter("violations_noMask").increment(violations);
-        meterRegistry.counter("violations_total").increment(violations);
-        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.counter("violations_percentage").increment(violationsPercentage);
+        registerToMeter("violations_noMask", violations, nonViolations, people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -115,6 +110,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     public ResponseEntity<PPEResponse> scanForHeadCover(@RequestParam String bucketName) {
         int violations = 0;
         int nonViolations = 0;
+        int people = 0;
 
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
@@ -141,22 +137,16 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             // If any person on an image lacks PPE on the face, it's a violation of regulations
             boolean violation = isViolation(result, "HEAD");
-            if (violation) {
-                violations++;
-            } else {
-                nonViolations++;
-            }
+            if (violation) violations++; else nonViolations++;
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
             int personCount = result.getPersons().size();
+            people += personCount;
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        meterRegistry.counter("violations_noHelmet").increment(violations);
-        meterRegistry.counter("violations_total").increment(violations);
-        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.counter("violations_percentage").increment(violationsPercentage);
+        registerToMeter("violations_noHelmet", violations, nonViolations, people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -174,6 +164,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     public ResponseEntity<PPEResponse> scanForFullPPE(@RequestParam String bucketName) {
         int violations = 0;
         int nonViolations = 0;
+        int people = 0;
 
         // List all objects in the S3 bucket
         ListObjectsV2Result imageList = s3Client.listObjectsV2(bucketName);
@@ -204,22 +195,16 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             if (!violation) {
                 violation = isViolation(result, "HAND");
             }
-            if (violation) {
-                violations++;
-            } else {
-                nonViolations++;
-            }
+            if (violation) violations++; else nonViolations++;
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
             int personCount = result.getPersons().size();
+            people += personCount;
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        meterRegistry.counter("violations_noMaskOrGlove").increment(violations);
-        meterRegistry.counter("violations_total").increment(violations);
-        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.counter("violations_percentage").increment(violationsPercentage);
+        registerToMeter("violations_noMaskOrGlove", violations, nonViolations, people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -241,6 +226,14 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                 .flatMap(p -> p.getBodyParts().stream())
                 .anyMatch(bodyPart -> bodyPart.getName().equals(partOfBody)
                         && bodyPart.getEquipmentDetections().isEmpty());
+    }
+
+    private void registerToMeter(String violationType, int violations, int nonViolations, int people) {
+        meterRegistry.counter(violationType).increment(violations);
+        meterRegistry.counter("violations_total").increment(violations);
+        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.counter("violations_percentage").increment(violationsPercentage);
+        meterRegistry.gauge("People in Building", people);
     }
 
 
