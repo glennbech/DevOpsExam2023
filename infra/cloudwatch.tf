@@ -36,7 +36,7 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         "type": "metric",
-        "x": 0,
+        "x": 12,
         "y": 0,
         "width": 12,
         "height": 6,
@@ -44,7 +44,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "violations_percentage.count"
+              "violations_percentage.value"
             ]
           ],
           "period": 300,
@@ -55,7 +55,7 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         "type": "metric",
-        "x": 12,
+        "x": 0,
         "y": 0,
         "width": 12,
         "height": 6,
@@ -108,7 +108,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "people_count.count"
+              "people_count.value"
             ]
           ],
           "view": "gauge",
