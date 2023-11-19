@@ -143,7 +143,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             DetectProtectiveEquipmentResult result = rekognitionClient.detectProtectiveEquipment(request);
 
-            // If any person on an image lacks PPE on the face, it's a violation of regulations
+            // If any person on an image lacks PPE on the head, it's a violation of regulations
             boolean violation = isViolation(result, "HEAD");
             if (violation) violations++; else nonViolations++;
 
@@ -204,7 +204,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             DetectProtectiveEquipmentResult result = rekognitionClient.detectProtectiveEquipment(request);
 
-            // If any person on an image lacks PPE on the face, it's a violation of regulations
+            // If any person on an image lacks PPE on the face and hands, it's a violation of regulations
             boolean violation = isViolation(result, "FACE");
             if (!violation) {
                 violation = isViolation(result, "HAND");
@@ -252,9 +252,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     private void registerToMeter(String violationType, int violations, int nonViolations, int people) {
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
-        int violationsPercentage = (int) (((double) violations / (violations + nonViolations)) * 100);
+        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
         meterRegistry.gauge("percentage", violationsPercentage);
-        System.out.println(violationsPercentage);
         meterRegistry.gauge("people_count", people);
         System.out.println(people);
     }
