@@ -92,13 +92,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        //registerToMeter("violations_noMask", violations, nonViolations, people);
-        meterRegistry.counter("violations_noMask").increment(violations);
-        meterRegistry.counter("violations_total").increment(violations);
-        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.gauge("violations_noMask_percentage", violationsPercentage);
-        meterRegistry.gauge("people_count", people);
-        System.out.println(people);
+        registerToMeter("violations_noMask", violations, nonViolations, "violations_noMask_percentage", people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -154,13 +148,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        //registerToMeter("violations_noHelmet", violations, nonViolations, people);
-        meterRegistry.counter("violations_noHelmet").increment(violations);
-        meterRegistry.counter("violations_total").increment(violations);
-        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.gauge("violations_noHelmet_percentage", violationsPercentage);
-        meterRegistry.gauge("people_count", people);
-        System.out.println(people);
+        registerToMeter("violations_noHelmet", violations, nonViolations, "violations_noHelmet_percentage", people);
+
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -218,14 +207,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        //registerToMeter("violations_noMaskOrGlove", violations, nonViolations, people);
-        meterRegistry.counter("violations_noMaskOrGlove").increment(violations);
-        meterRegistry.counter("violations_total").increment(violations);
-        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-
-        meterRegistry.gauge("violations_noMaskOrGlove_percentage", violationsPercentage);
-        meterRegistry.gauge("people_count", people);
-        System.out.println(people);
+        registerToMeter("violations_noMaskOrGlove", violations, nonViolations, "violations_noMaskOrGlove_percentage", people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -249,11 +231,12 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                         && bodyPart.getEquipmentDetections().isEmpty());
     }
 
-    private void registerToMeter(String violationType, int violations, int nonViolations, int people) {
+    private void registerToMeter(String violationType, int violations, int nonViolations, String violationTypePercentage, int people) {
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
         double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.gauge("percentage", violationsPercentage);
+        meterRegistry.gauge(violationTypePercentage, violationsPercentage);
+        System.out.println(violationsPercentage);
         meterRegistry.gauge("people_count", people);
         System.out.println(people);
     }

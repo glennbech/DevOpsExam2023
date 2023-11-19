@@ -52,5 +52,5 @@ variable "latencyThreshold" {
 
 variable "violationThreshold" {
   type = string
-  default = "25"
+  default = "10"
 }
