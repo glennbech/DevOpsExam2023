@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_metric_alarm" "threshold" {
-  alarm_name     = "${var.prefix}-threshold"
+  alarm_name     = "${var.prefix}-NoMaskLatency"
   namespace = var.prefix
   metric_name = "latency_noMask.avg"
   dimensions = {
@@ -14,7 +14,47 @@ resource "aws_cloudwatch_metric_alarm" "threshold" {
   period = "60"
   extended_statistic = "p90"
 
-  alarm_description = "This alarm goes of, when a call at the 90th percentile exceeds the threshold"
+  alarm_description = "This alarm goes of, when a call at /scan-ppe at the 90th percentile exceeds the threshold"
+  alarm_actions = [aws_sns_topic.user_updates.arn]
+}
+
+resource "aws_cloudwatch_metric_alarm" "threshold" {
+  alarm_name     = "${var.prefix}-NoHelmetLatency"
+  namespace = var.prefix
+  metric_name = "latency_noHelmet.avg"
+  dimensions = {
+    class = "com.example.s3rekognition.controller.RekognitionController"
+    exception = "none"
+    method = "scanForHeadCover"
+  }
+
+  comparison_operator = "GreaterThanThreshold"
+  threshold = var.threshold
+  evaluation_periods = "2"
+  period = "60"
+  extended_statistic = "p90"
+
+  alarm_description = "This alarm goes of, when a call at /scan-construction at the 90th percentile exceeds the threshold"
+  alarm_actions = [aws_sns_topic.user_updates.arn]
+}
+
+resource "aws_cloudwatch_metric_alarm" "threshold" {
+  alarm_name     = "${var.prefix}-NoMaskOrGloveLatency"
+  namespace = var.prefix
+  metric_name = "latency_noMaskOrGlove.avg"
+  dimensions = {
+    class = "com.example.s3rekognition.controller.RekognitionController"
+    exception = "none"
+    method = "scanForFullPPE"
+  }
+
+  comparison_operator = "GreaterThanThreshold"
+  threshold = var.threshold
+  evaluation_periods = "2"
+  period = "60"
+  extended_statistic = "p90"
+
+  alarm_description = "This alarm goes of, when a call at /scan-full-ppe at the 90th percentile exceeds the threshold"
   alarm_actions = [aws_sns_topic.user_updates.arn]
 }
 
