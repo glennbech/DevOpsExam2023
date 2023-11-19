@@ -92,7 +92,14 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        registerToMeter("violations_noMask", violations, nonViolations, people);
+        //registerToMeter("violations_noMask", violations, nonViolations, people);
+        meterRegistry.counter("violations_noMask").increment(violations);
+        meterRegistry.counter("violations_total").increment(violations);
+        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.gauge("percentage", violationsPercentage);
+        System.out.println(violationsPercentage);
+        meterRegistry.gauge("people_count", people);
+        System.out.println(people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -148,7 +155,14 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        registerToMeter("violations_noHelmet", violations, nonViolations, people);
+        //registerToMeter("violations_noHelmet", violations, nonViolations, people);
+        meterRegistry.counter("violations_noHelmet").increment(violations);
+        meterRegistry.counter("violations_total").increment(violations);
+        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.gauge("percentage", violationsPercentage);
+        System.out.println(violationsPercentage);
+        meterRegistry.gauge("people_count", people);
+        System.out.println(people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -206,7 +220,14 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        registerToMeter("violations_noMaskOrGlove", violations, nonViolations, people);
+        //registerToMeter("violations_noMaskOrGlove", violations, nonViolations, people);
+        meterRegistry.counter("violations_noMaskOrGlove").increment(violations);
+        meterRegistry.counter("violations_total").increment(violations);
+        double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.gauge("percentage", violationsPercentage);
+        System.out.println(violationsPercentage);
+        meterRegistry.gauge("people_count", people);
+        System.out.println(people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -230,7 +251,6 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                         && bodyPart.getEquipmentDetections().isEmpty());
     }
 
-     @Timed
     private void registerToMeter(String violationType, int violations, int nonViolations, int people) {
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);

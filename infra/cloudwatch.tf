@@ -62,34 +62,8 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         "type": "metric",
-        "x": 18,
-        "y": 0,
-        "width": 6,
-        "height": 6,
-        "properties": {
-          "metrics": [
-            [
-              "${var.dashboard_name}",
-              "people_count.value"
-            ]
-          ],
-          "view": "gauge",
-          "yAxis":{
-             "left":{
-                "min":0,
-                "max":100
-             }
-          },
-          "period": 300,
-          "stat": "Maximum",
-          "region": "eu-west-1",
-          "title": "People in the building"
-        }
-      },
-      {
-        "type": "metric",
         "x": 0,
-        "y": 0,
+        "y": 6,
         "width": 12,
         "height": 6,
         "properties": {
@@ -129,6 +103,32 @@ resource "aws_cloudwatch_dashboard" "main" {
           "stat": "Average",
           "region": "eu-west-1",
           "title": "Method Latency"
+        }
+      },
+      {
+        "type": "metric",
+        "x": 18,
+        "y": 6,
+        "width": 6,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [
+              "${var.dashboard_name}",
+              "people_count.value"
+            ]
+          ],
+          "view": "gauge",
+          "yAxis":{
+             "left":{
+                "min":0,
+                "max":100
+             }
+          },
+          "period": 300,
+          "stat": "Maximum",
+          "region": "eu-west-1",
+          "title": "People in the building"
         }
       }
     ]

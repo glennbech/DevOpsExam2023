@@ -19,6 +19,11 @@ Candidate Nr: 2011
   * [x] Every push to main should build and deploy the lambda function
   * [x] Push to other branches should just build
 * [ ] Explain what the sensor must do to make the workflow run using their own GitHub account.
+* For å kjøre [python-deploy.yml](.github/workflows/python-deploy.yml) må du legge in IAM key og IAM secret key fra AWS brukeren din på GitHub secrets
+* For å teste applikasjonen etter den kjører kan du bruke kommandoene under. Du kan bytte ut BUCKET_NAME med navnet på din egen bucket, men kan godt bruke min. Men du må bytte ut *** med dine egne keys
+  * docker run -p 8080:8080 -e AWS_ACCESS_KEY_ID=*** -e AWS_SECRET_ACCESS_KEY=*** -e BUCKET_NAME=simbucket2011 ppe 
+  * docker run -e AWS_ACCESS_KEY_ID=***  -e AWS_SECRET_ACCESS_KEY=***  -e BUCKET_NAME=simbucket2011 kjellpy
+
 
 ### B. Docker container
 * [x] Make a dockerfile that builds and runs the code. 
@@ -40,6 +45,11 @@ Candidate Nr: 2011
 * [x] Have Terraform run after pushes to main that build Docker container images
 * [x] Add terraform provider, use S3 bucket that we have used during practice
 * [ ] Explain what the sensor must do to make the workflow run using their own GitHub account.
+* For å kjøre [java-deploy.yml](.github/workflows/java-deploy.yml) må du legge in IAM key og IAM secret key fra AWS brukeren din på GitHub secrets, med mindre du allerede gjorde det for Pythin scripted. 
+* Du kan teste applikasjonen med å kjøre curl kommandoen under for å teste applikasjonen som kjører på mitt domene/apprunner
+  * curl -X GET "https://dx27uij3b5.eu-west-1.awsapprunner.com/scan-ppe?bucketName=simbucket2011"
+* Eller, du kan kjøre kommandoen under når du tester lokalt
+  * curl http://localhost:8080/scan-ppe?bucketName=simbucket2011
 
 ## Oppgave 4. Feedback
 
@@ -47,7 +57,7 @@ Candidate Nr: 2011
 * [x] Add more endpoints
 * [x] Change the java app to allow Micrometer framework
 * [x] Configure the micrometer to work with CloudWatch
-* [ ] Implement various meters
+* [x] Implement various meters
 * [ ] Write a short explanation for why I chose those meters
 
 ### B. CloudWatch Alarm og Terraform moduler
