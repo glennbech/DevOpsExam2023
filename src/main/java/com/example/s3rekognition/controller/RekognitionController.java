@@ -96,7 +96,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         meterRegistry.counter("violations_noMask").increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
         double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.gauge("percentage", violationsPercentage);
+        meterRegistry.gauge("violations_noMask_percentage", violationsPercentage);
         System.out.println(violationsPercentage);
         meterRegistry.gauge("people_count", people);
         System.out.println(people);
@@ -159,7 +159,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         meterRegistry.counter("violations_noHelmet").increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
         double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.gauge("percentage", violationsPercentage);
+        meterRegistry.gauge("violations_noHelmet_percentage", violationsPercentage);
         System.out.println(violationsPercentage);
         meterRegistry.gauge("people_count", people);
         System.out.println(people);
@@ -224,7 +224,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         meterRegistry.counter("violations_noMaskOrGlove").increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
         double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.gauge("percentage", violationsPercentage);
+        meterRegistry.gauge("violations_noMaskOrGlove_percentage", violationsPercentage);
         System.out.println(violationsPercentage);
         meterRegistry.gauge("people_count", people);
         System.out.println(people);
