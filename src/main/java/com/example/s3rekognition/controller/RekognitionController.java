@@ -32,6 +32,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
     private static final Logger logger = Logger.getLogger(RekognitionController.class.getName());
 
+
     @Autowired
     public RekognitionController(MeterRegistry meterRegistry) {
         this.s3Client = AmazonS3ClientBuilder.standard().build();
@@ -229,17 +230,23 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                         && bodyPart.getEquipmentDetections().isEmpty());
     }
 
+     @Timed
     private void registerToMeter(String violationType, int violations, int nonViolations, int people) {
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
         double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
         meterRegistry.gauge("percentage", violationsPercentage);
+        System.out.println(violationsPercentage);
         meterRegistry.gauge("people_count", people);
+        System.out.println(people);
     }
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
+
+
     }
 
 }
+
