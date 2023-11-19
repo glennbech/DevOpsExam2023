@@ -53,7 +53,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             [
               "${var.dashboard_name}",
               "violations_noMaskOrGlove_percentage.value"
-            ],
+            ]
           ],
           "view": "gauge",
           "yAxis":{
