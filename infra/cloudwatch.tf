@@ -55,7 +55,7 @@ resource "aws_cloudwatch_dashboard" "main" {
       },
       {
         "type": "metric",
-        "x": 0,
+        "x": 12,
         "y": 0,
         "width": 12,
         "height": 6,
@@ -99,8 +99,8 @@ resource "aws_cloudwatch_dashboard" "main" {
         }
       },
       {
-        "type": "gauge",
-        "x": 0,
+        "type": "singleValue",
+        "x": 12,
         "y": 0,
         "width": 12,
         "height": 6,

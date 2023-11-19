@@ -99,7 +99,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
     /**
      * This endpoint is an experimental one where VerneVokterne
-     * wanted to test their software against construction workers to check if they wore helmet
+     * wanted to test their software against construction workers that are doing
+     * some renovations at the hospital, ensuring they are wearing protective helmets
      *
      * @param bucketName the name of the bucket that contains the images to be used
      * @return a json with information about which images had violations and not
@@ -235,7 +236,6 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         meterRegistry.counter("violations_percentage").increment(violationsPercentage);
         meterRegistry.gauge("people_count", people);
     }
-
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
