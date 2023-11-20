@@ -192,7 +192,10 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             DetectProtectiveEquipmentResult result = rekognitionClient.detectProtectiveEquipment(request);
 
             // If any person on an image lacks PPE on the face and hands, it's a violation of regulations
-            boolean violation = isViolation(result, "FACE") || isViolation(result, "HAND");
+            boolean violation = false;
+            if (isViolation(result, "FACE") || isViolation(result, "HAND")) {
+                violation = true;
+            }
             if (violation) violations++; else nonViolations++;
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
