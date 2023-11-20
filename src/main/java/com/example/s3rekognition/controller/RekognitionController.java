@@ -11,6 +11,7 @@ import com.example.s3rekognition.PPEClassificationResponse;
 import com.example.s3rekognition.PPEResponse;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Metrics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -243,7 +244,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         }
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
-        meterRegistry.counter("people_count").increment(people);
+        //meterRegistry.gauge("people_count", people);
+        Metrics.gauge("people_count", people);
     }
 
     @Override
