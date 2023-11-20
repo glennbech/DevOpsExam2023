@@ -93,6 +93,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
+        Number violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.gauge("noMask_violations_percentage", violationsPercentage);
         registerToMeter("violations_noMask", violations, nonViolations, "noMask_violations_percentage", people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
@@ -149,6 +151,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
+        Number violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.gauge("noHelmet_violations_percentage", violationsPercentage);
         registerToMeter("violations_noHelmet", violations, nonViolations, "noHelmet_violations_percentage", people);
 
 
@@ -208,6 +212,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
+        Number violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.gauge("noMaskOrGlove_violations_percentage", violationsPercentage);
         registerToMeter("violations_noMaskOrGlove", violations, nonViolations, "noMaskOrGlove_violations_percentage", people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
@@ -235,9 +241,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
     @Timed
     public void registerToMeter(String violationType, int violations, int nonViolations, String violationTypePercentage, int people) {
-        Number violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        //meterRegistry.counter(violationTypePercentage).increment();
-        meterRegistry.gauge(violationTypePercentage, violationsPercentage);
+
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
         meterRegistry.gauge("people_count", people);
