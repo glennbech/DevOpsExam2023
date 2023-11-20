@@ -44,15 +44,15 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "noMask_violations_percentage.value"
+              "violations_noMask_percentage.value"
             ],
             [
               "${var.dashboard_name}",
-              "noHelmet_violations_percentage.value"
+              "violations_noHelmet_percentage.value"
             ],
             [
               "${var.dashboard_name}",
-              "noMaskOrGlove_violations_percentage.value"
+              "violations_noMaskOrGlove_percentage.value"
             ]
           ],
           "view": "gauge",
