@@ -231,8 +231,9 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                         && bodyPart.getEquipmentDetections().isEmpty());
     }
 
+
     @Timed
-    private void registerToMeter(String violationType, int violations, int nonViolations, String violationTypePercentage, int people) {
+    public void registerToMeter(String violationType, int violations, int nonViolations, String violationTypePercentage, int people) {
         double violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
@@ -244,7 +245,6 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-
 
 
     }
