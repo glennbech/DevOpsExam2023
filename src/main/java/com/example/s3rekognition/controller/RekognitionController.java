@@ -236,7 +236,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     @Timed
     public void registerToMeter(String violationType, int violations, int nonViolations, String violationTypePercentage, int people) {
         Number violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
-        meterRegistry.counter(violationTypePercentage).increment();
+        //meterRegistry.counter(violationTypePercentage).increment();
         meterRegistry.gauge(violationTypePercentage, violationsPercentage);
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
