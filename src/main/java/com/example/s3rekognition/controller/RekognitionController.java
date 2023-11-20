@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.example.s3rekognition.PPEClassificationResponse;
 import com.example.s3rekognition.PPEResponse;
 import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -234,11 +235,11 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
     @Timed
     public void registerToMeter(String violationType, int violations, int nonViolations, String violationTypePercentage, int people) {
-        int violationsPercentage = (int)((double) violations / (violations + nonViolations)) * 100;
+        Number violationsPercentage = ((double) violations / (violations + nonViolations)) * 100;
+        meterRegistry.counter(violationTypePercentage).increment();
+        meterRegistry.gauge(violationTypePercentage, violationsPercentage);
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
-        meterRegistry.gauge(violationTypePercentage, violationsPercentage);
-        System.out.println(violationsPercentage);
         meterRegistry.gauge("people_count", people);
         System.out.println(people);
     }
