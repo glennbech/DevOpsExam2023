@@ -193,7 +193,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
             // If any person on an image lacks PPE on the face and hands, it's a violation of regulations
             boolean violation = false;
-            if (isViolation(result, "FACE") || isViolation(result, "HAND")) {
+            if (isViolation(result, "FACE") || isViolation(result, "LEFT_HAND") || isViolation(result, "RIGHT_HAND")) {
                 violation = true;
             }
             if (violation) violations++; else nonViolations++;
