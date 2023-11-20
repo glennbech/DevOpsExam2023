@@ -237,18 +237,17 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         if (totalCases != 0) {
             double violationsPercentage = ((double) violations / totalCases) * 100;
             meterRegistry.gauge(violationType + "_percentage", violationsPercentage);
+            System.out.println("It was not 0");
         } else {
             System.out.println("WHY IS THERE A 0?");
         }
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
-        meterRegistry.gauge("people_count", people);
-        System.out.println(people);
+        meterRegistry.counter("people_count").increment(people);
     }
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-
 
     }
 

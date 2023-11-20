@@ -123,7 +123,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           "metrics": [
             [
               "${var.dashboard_name}",
-              "people_count.value"
+              "people_count.count"
             ]
           ],
           "view": "gauge",
