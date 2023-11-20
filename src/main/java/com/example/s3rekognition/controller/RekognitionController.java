@@ -11,7 +11,6 @@ import com.example.s3rekognition.PPEClassificationResponse;
 import com.example.s3rekognition.PPEResponse;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Metrics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -92,6 +91,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
+        System.out.println(violations + " " + nonViolations + ", People: " + people);
         registerToMeter("violations_noMask", violations, nonViolations, people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
@@ -238,14 +238,13 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         if (totalCases != 0) {
             double violationsPercentage = ((double) violations / totalCases) * 100;
             meterRegistry.gauge(violationType + "_percentage", violationsPercentage);
-            System.out.println("It was not 0");
+            System.out.println("It was not 0. Total cases: " + totalCases + " Violations: " + violations + " Type: " + violationType);
         } else {
             System.out.println("WHY IS THERE A 0?");
         }
         meterRegistry.counter(violationType).increment(violations);
         meterRegistry.counter("violations_total").increment(violations);
-        //meterRegistry.gauge("people_count", people);
-        Metrics.gauge("people_count", people);
+        meterRegistry.gauge("people_count", people);
     }
 
     @Override
