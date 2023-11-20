@@ -96,8 +96,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             classificationResponses.add(classification);
         }
         ppePercentage = registerToMeter("violations_noMask", violations, nonViolations, people);
-        meterRegistry.gauge("violations_noHelmet_percentage", constructionPercentage);
-        meterRegistry.gauge("violations_noMaskOrGlove_percentage", fullPpePercentage);
+        if(constructionPercentage >= 0) meterRegistry.gauge("violations_noHelmet_percentage", constructionPercentage);
+        if(fullPpePercentage >= 0) meterRegistry.gauge("violations_noMaskOrGlove_percentage", fullPpePercentage);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -154,8 +154,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             classificationResponses.add(classification);
         }
         constructionPercentage = registerToMeter("violations_noHelmet", violations, nonViolations, people);
-        meterRegistry.gauge("violations_noMask_percentage", ppePercentage);
-        meterRegistry.gauge("violations_noMaskOrGlove_percentage", fullPpePercentage);
+        if(ppePercentage >= 0) meterRegistry.gauge("violations_noMask_percentage", ppePercentage);
+        if(fullPpePercentage >= 0) meterRegistry.gauge("violations_noMaskOrGlove_percentage", fullPpePercentage);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -213,8 +213,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             classificationResponses.add(classification);
         }
         fullPpePercentage = registerToMeter("violations_noMaskOrGlove", violations, nonViolations, people);
-        meterRegistry.gauge("violations_noHelmet_percentage", constructionPercentage);
-        meterRegistry.gauge("violations_noMask_percentage", ppePercentage);
+        if(constructionPercentage >= 0) meterRegistry.gauge("violations_noHelmet_percentage", constructionPercentage);
+        if(ppePercentage >= 0) meterRegistry.gauge("violations_noMask_percentage", ppePercentage);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -251,7 +251,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             System.out.println("WHY IS THERE A 0?");
         }
         meterRegistry.counter(violationType).increment(violations);
-        meterRegistry.counter("violations_total").increment(violations);
+        if(constructionPercentage >= 0) meterRegistry.counter("violations_total").increment(violations);
         meterRegistry.gauge("people_count", people);
 
         return violationsPercentage;
