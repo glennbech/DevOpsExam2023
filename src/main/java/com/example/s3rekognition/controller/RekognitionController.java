@@ -251,4 +251,3 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     }
 
 }
-
