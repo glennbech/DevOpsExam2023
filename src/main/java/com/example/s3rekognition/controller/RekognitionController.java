@@ -91,7 +91,6 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
         }
-        System.out.println(violations + " " + nonViolations + ", People: " + people);
         registerToMeter("violations_noMask", violations, nonViolations, people);
 
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
@@ -194,10 +193,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             DetectProtectiveEquipmentResult result = rekognitionClient.detectProtectiveEquipment(request);
 
             // If any person on an image lacks PPE on the face and hands, it's a violation of regulations
-            boolean violation = isViolation(result, "FACE");
-            if (!violation) {
-                violation = isViolation(result, "HAND");
-            }
+            boolean violation = isViolation(result, "FACE") || isViolation(result, "HAND");
             if (violation) violations++; else nonViolations++;
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
