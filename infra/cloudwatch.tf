@@ -150,4 +150,5 @@ module "alarm" {
   prefix = var.dashboard_name
   latencyThreshold = var.latencyThreshold
   violationsThreshold = var.violationThreshold
+  violationsPercentageThreshold = var.violationsPercentageThreshold
 }

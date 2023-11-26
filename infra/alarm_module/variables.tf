@@ -12,6 +12,11 @@ variable "violationsThreshold" {
   default = "20"
 }
 
+variable "violationsPercentageThreshold" {
+  type = string
+  default = "15"
+}
+
 variable "alarm_email" {
   description = "The email that receives the alarm notification"
 }

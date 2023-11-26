@@ -47,10 +47,16 @@ variable "alarm_email" {
 
 variable "latencyThreshold" {
   type = string
-  default = "7000"
+  default = "8000"
 }
 
 variable "violationThreshold" {
   type = string
   default = "10"
 }
+
+variable "violationsPercentageThreshold" {
+  type = string
+  default = "15"
+}
+
