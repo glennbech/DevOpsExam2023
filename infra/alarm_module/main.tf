@@ -82,7 +82,7 @@ resource "aws_cloudwatch_metric_alarm" "ToManyPPEPercentageViolations" {
   threshold = var.violationsPercentageThreshold
   evaluation_periods = "2"
   period = "60"
-  statistic = "Sum"
+  statistic = "Maximum"
 
   alarm_description = "This alarm goes off when too high a percent of people violate standard PPE"
   alarm_actions = [aws_sns_topic.user_updates.arn]
