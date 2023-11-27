@@ -42,11 +42,29 @@ Jeg måler også hvor mange som bryter ppe reglene, både på antall og prosent.
 
 ## Oppgave 5. Drøfteoppgaver
 ### A. Kontinuerlig Integrering
-Kontinuerlig integrasjon er et software prinsipp 
+- En definisjon av kontinuerlig integrasjon.
 
+Kontinuerlig integrasjon er et software-prinsipp der man kontinuerlig integrerer koden man utvikler inn i hoved branchen, samt at koden deployes i production. Dette gjøres via automatiserte prosesser som f.eks. GitHub Actions.
+
+- Fordelene med å bruke CI i et utviklingsprosjekt - hvordan CI kan forbedre kodekvaliteten og effektivisere utviklingsprosessen.
+
+Siden CI gjør automatisk bygg og testing ofte så vil man oppdage feil og bugs raskere. Man vil også ha en mye raskere utviklingssyklus, da man går raskt fra development, til testing, til at koden går ut i produksjons miljøet. Fordi man også integrerer ofte, vil man få færre feil når det gjelder integrasjon og konflikter. CI gjør også samarbeid mellom utviklere lettere ved å sikre at endringer i koden integreres jevnlig, som gjør at man kan bygge videre på hverandres arbeid og se hva andre gjør lettere. CI gir også muligheten til å automatisere byggeprosessen og testing noe som frigjør utviklernes tid og reduserer manuell innsats.
+
+- Hvordan jobber vi med CI i GitHub rent praktisk? For eskempel i et utviklingsteam på fire/fem utivklere?
+
+Man kan da jobbe på hver sin branch, hvor man kjører GitHub Actions på pull-requests mot main får å verifisere at koden vil fungere på main branches. Man kan også da trekke andre sine pushes inn på egne branches for å kunne ta i bruks deres arbeid på det man jobber på. Man vil raskt kunne fikse ting hvis det går galt, og grunnet versjonskontroll kan man lettere se hva endringene som ble gjort var.
 ### B. Sammenligning av Scrum/Smidig og DevOps fra et Utviklers Perspektiv
+1. **Scrum/Smidig Metodikk:**
 
+Scrum er en smidig metodikk som benyttes i utvikling for å organisere og håndtere komplekse prosjekter. Man har definerte roller som Scrum Master, Product Owner, og utviklingsteam, og jobber i iterative perioder kalt sprinter som varer et par uker. Scrum fremmer samarbeid mellom teammedlemmer og kunder gjennom daglige scrum-møter og sprint-reviews. Dette gir fleksibilitet, rask tilpasningsmuligheter og tidlig leveranse av funksjonalitet. Utfordringer i Scrum kan oppstå når team ikke overholder strukturen eller når kravene endres ofte. Det kan også være at man i Scrum kun pusher til produksjon på slutten av hver sprint, som betyr at hvis man har lengre sprinter, så pusher man ikke kode så ofte, som betyr at feil kan bli større og vanskeligere å fikse.
+
+2. **DevOps Metodikk:**
+
+DevOps er en metodikk som fokuserer på å kombinere utvikling- og driftsaktiviteten for å oppnå kontinuerlig leveranse av kode. En del av de sentrale prinsippene er automatisering, samarbeid og overvåking. Via automatisering gjør man bygging, testing, og deplyoment, noe som bidrar til raskere leveranse og kvalitetssikring. Fordi man ofte pusher til main/produksjon så vil man bli klar over feil fort, og kan raskt finne grunnårsaken og fikse det. Kvaliteten på koden vil dermed bli bedre, samtidig som man kan sende ut ny kode raskt og hyppig vie automatiseringen. Styrker ved DevOps er økt effektivitet, redusert tide fra development til koden er i produksjonsmiljøet og forbedret samarbeid. Utfordringer kan oppstå når det gjelder å implementere kulturendringer, håndtere komplekse automatiseringsverktøy og opprettholde sikkerhet.
+
+3. **Sammenligning og Kontrast:**
+
+Både Scrum og DevOps har forskjellige styrker og svakheter. Scrum legger mer vekt på strukturerte sprinter og samarbeid, som gir fleksibilitet og tidlig leveranse av kode. Men, utfordringer kan oppstår når krav endres ofte eller strukturen ikke følges ordentlig. Har opplevd dette selv da vi jobbet med Scrum og man ble litt for fokusert på koding at man glemte daily standups og diskusjoner, noe som gjorde at man mistet litt overblikket over utviklingen og hvordan andre lå an. Dette måtte vi da ta opp igjen senere, noe som jeg følte sakket ned prosessen noe. Man vil også få en sjeldnere push til produksjonsmiljøet i Scrum enn i DevOps, da man kun skal pushe til produksjon i slutten av hver sprint. I DevOps derimot, fokuserer man mer på den kontinuerlige integrasjonen og leveransen, med automatiserte prosesser. Dette gjør at man pusher ofte til produksjonsmiljøet og kan da oppdage feil tidligere. Personlig har dette vært en veldig givende måte å jobbe på, men også ganske frustrerende. Man føler og tror at alt fungerer helt fint på egen pc, så pusher man til AWS, og ingenting fungerer som det skal. Detter er derimot ikke veldig negativt, for det gjør at man raskt blir klar over feilen og har hjulpet meg til å oppdage ting mye tidligere som ville vært mye vanskeligere og fikse om jeg hadde fortsatt og bygd mye kode oppå det jeg gjorde feil. Scrum er en god metodikk det man vil ha en tydelig struktur og en nøye planlagt løype. Den kan passe bra når man skal utvikle et nytt produkt for en kunde og man ønsker kontinuerlig kommunikasjon med kunden mens man utvikler og endrer produktet. DevOps vil være foretrukket der man jobber rask og ønsker å hyppig rulle ut nye versjoner og oppdateringer, samt i et miljø hvor produktet allerede er «live», og man må fikse bugs og feil raskt.
 
 ### C. Det Andre Prinsippet - Feedback
-
-
+Feedback er en kritisk del av DevOps, da dette gir utviklerne kunnskap om hvor i produktet det er mangler og eventuelt feil. Man kan da sette opp måleinstrumenter i for eksempel CloudWatch. Her kan man da se trender og endringer som kanskje gir rom for at man må forandre på koden eller hvordan man opererer. Man kan for eksempel se hvor mange salg en nettside gjør før og etter en endring, for å se om den nye layouten hjelper kundene eller potensielt gjør at de velger å ikke handle der. Dette kan man sette om med terraform som infrastruktur som kode, og da automatiseres for å holde tråd med DevOps prinsipper. Feedback vil også integreres i testfasen, da finner man raskt ut om visse funksjonaliteter fungerer eller har blitt ødelagt av nye endringer.

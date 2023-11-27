@@ -73,21 +73,6 @@ resource "aws_cloudwatch_metric_alarm" "ToManyPPEViolations" {
   alarm_actions = [aws_sns_topic.user_updates.arn]
 }
 
-resource "aws_cloudwatch_metric_alarm" "ToManyPPEViolations" {
-  alarm_name     = "${var.prefix}-ViolationsThreshold"
-  namespace = var.prefix
-  metric_name = "violations_total.count"
-
-  comparison_operator = "GreaterThanThreshold"
-  threshold = var.violationsThreshold
-  evaluation_periods = "2"
-  period = "60"
-  statistic = "Sum"
-
-  alarm_description = "This alarm goes off when too many violate standard PPE"
-  alarm_actions = [aws_sns_topic.user_updates.arn]
-}
-
 resource "aws_cloudwatch_metric_alarm" "ToManyPPEPercentageViolations" {
   alarm_name     = "${var.prefix}-ViolationsPercentageThreshold"
   namespace = var.prefix
