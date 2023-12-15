@@ -33,7 +33,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: eu-west-1
       ACCESS_ROLE: arn:aws:iam::244530008913:role/service-role/AppRunnerECRAccessRole
-      IMAGE: 244530008913.dkr.ecr.eu-west-1.amazonaws.com/mama014-private:latest
+      IMAGE: 244530008913.dkr.ecr.eu-west-1.amazonaws.com/mama014-private-sensur:latest
       POLICY_NAME: 2011-apr-policy
       PORT: 8080
       ROLE_NAME: Kandidat2011Sim
