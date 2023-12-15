@@ -21,4 +21,4 @@ jobs:
 
       - name: Deploy
         if: github.ref == 'refs/heads/master'
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name samsimp2011-sensur --s3-bucket pgr301-sam-bucket --capabilities CAPABILITY_IAM --region eu-west-1
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name samsimp2011-sensur2 --s3-bucket pgr301-sam-bucket --capabilities CAPABILITY_IAM --region eu-west-1
